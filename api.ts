@@ -3,7 +3,7 @@ import fs from "fs";
 import { TimelineDAO } from "./models/timeline";
 import { PlaceDAO } from "./models/place";
 
-const auth_file = fs.readFileSync("./mai2022-349817-53b1c5885a5c.json");
+const auth_file = process.env.login_val || "";
 const auth_data = JSON.parse(auth_file.toString());
 const doc = new GoogleSpreadsheet(
   "1OCGy1rjHKagj7RdVOcbpCAAJCg-GI78f1lUTH60B5Ho"
