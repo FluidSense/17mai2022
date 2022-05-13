@@ -1,7 +1,7 @@
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { getPlaces, getTimeline } from "../api-auth";
+import { places, getTimeline, getPlaces } from "../api";
 import {
   getPlaceFromPlaceName,
   Place,
@@ -12,6 +12,7 @@ import { NorwayFlag } from "../components/NorwayFlag";
 import { Timeline, TimelineDAO, timelineFromDAO } from "../models/timeline";
 import styles from "../styles/Home.module.css";
 import { TimelineIcon } from "../components/TimelineIcon";
+import Link from "next/link";
 
 interface Props {
   rawTimeline: TimelineDAO[];
@@ -28,9 +29,17 @@ const Home: NextPage<Props> = ({ rawTimeline, rawPlaces }) => {
         <meta name="description" content="Gutta kødder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Banner />
-      <nav></nav>
+      <header>
+        <nav>
+          <Link href="/dranks">
+            <a>Drikkeoversikt</a>
+          </Link>
+        </nav>
+        <Banner />
+      </header>
       <main>
+        <Map />
+        <h2 style={{ margin: "0 0 0 5%" }}>Program</h2>
         <TimelineView timeline={timeline} places={places} />
       </main>
     </div>
@@ -45,6 +54,22 @@ const Banner = () => (
   </div>
 );
 
+function Map() {
+  return (
+    <div style={{ height: "200px", width: "100%" }}>
+      <div
+        style={{
+          backgroundColor: "gray",
+          borderRadius: "5%",
+          margin: "0 auto",
+          height: "80%",
+          width: "80%",
+        }}
+      ></div>
+    </div>
+  );
+}
+
 const TimelineView = ({
   timeline,
   places,
@@ -55,17 +80,33 @@ const TimelineView = ({
   return (
     <table className={styles.timelineTableWrapper}>
       <tbody>
-        {timeline.map((entry) => (
-          <tr key={entry.placeId + entry.time}>
-            <td>
-              <TimelineIcon timeline={entry} />
-            </td>
-            <td className={styles.timeColumn}>
-              {entry.time?.toLocaleTimeString("no-NO").substring(0, 5)}
-            </td>
-            <td>{getPlaceFromPlaceName(places, entry.placeId)?.displayName}</td>
-          </tr>
-        ))}
+        {timeline.map((entry) => {
+          const hasDeparture = !!entry.departure;
+          return (
+            <>
+              <tr key={entry.placeId + entry.arrival}>
+                <td>
+                  <TimelineIcon timeline={entry} />
+                </td>
+                <td className={styles.timeColumn}>
+                  {entry.arrival?.toLocaleTimeString("no-NO").substring(0, 5)}
+                  {hasDeparture && (
+                    <>
+                      {" "}
+                      -{" "}
+                      {entry.departure
+                        ?.toLocaleTimeString("no-NO")
+                        .substring(0, 5)}
+                    </>
+                  )}
+                </td>
+                <td>
+                  {getPlaceFromPlaceName(places, entry.placeId)?.displayName}
+                </td>
+              </tr>
+            </>
+          );
+        })}
       </tbody>
     </table>
   );

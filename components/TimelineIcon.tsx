@@ -8,9 +8,7 @@ interface Props {
 
 export const TimelineIcon = ({ timeline }: Props) => {
   switch (timeline.type) {
-    case "arrival":
-      return <GoLocation />;
-    case "departure":
+    case "location":
       return <GoLocation />;
     case "via":
       return <FaRegCircle />;

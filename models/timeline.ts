@@ -1,30 +1,37 @@
 export type Timeline = {
-  time?: Date;
+  arrival?: Date;
+  departure?: Date;
   placeId: string;
   type: TimelineType;
 };
 
 export type TimelineDAO = {
-  time: string;
+  arrival: string;
+  departure: string;
   place: string;
   type: string;
 };
 
-type TimelineType = "arrival" | "departure" | "via" | "default";
+type TimelineType = "location" | "via" | "default";
 
 function isTimelineType(obj: any): obj is TimelineType {
   const valAsString = String(obj);
   return (
-    valAsString === "arrival" ||
-    valAsString === "departure" ||
+    valAsString === "location" ||
     valAsString === "via" ||
     valAsString === "default"
   );
 }
 
-export function timelineFromDAO({ time, place, type }: TimelineDAO): Timeline {
+export function timelineFromDAO({
+  arrival,
+  departure,
+  place,
+  type,
+}: TimelineDAO): Timeline {
   return {
-    time: !!time ? new Date(`2022-05-17T${time}`) : undefined,
+    arrival: !!arrival ? new Date(`2022-05-17T${arrival}`) : undefined,
+    departure: !!departure ? new Date(`2022-05-17T${departure}`) : undefined,
     type: isTimelineType(type) ? type : "default",
     placeId: place,
   };
