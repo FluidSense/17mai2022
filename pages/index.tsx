@@ -1,7 +1,7 @@
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
-import Image from "next/image";
-import { places, getTimeline, getPlaces } from "../api";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { getTimeline, getPlaces } from "../api";
 import {
   getPlaceFromPlaceName,
   Place,
@@ -13,11 +13,16 @@ import { Timeline, TimelineDAO, timelineFromDAO } from "../models/timeline";
 import styles from "../styles/Home.module.css";
 import { TimelineIcon } from "../components/TimelineIcon";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 interface Props {
   rawTimeline: TimelineDAO[];
   rawPlaces: PlaceDAO[];
 }
+
+const InnerMap = dynamic(() => import("../components/Map"), {
+  ssr: false,
+});
 
 const Home: NextPage<Props> = ({ rawTimeline, rawPlaces }) => {
   const timeline = rawTimeline.map((row) => timelineFromDAO(row));
@@ -38,7 +43,7 @@ const Home: NextPage<Props> = ({ rawTimeline, rawPlaces }) => {
         <Banner />
       </header>
       <main>
-        <Map />
+        <Map places={places} timeline={timeline} />
         <h2 style={{ margin: "0 0 0 5%" }}>Program</h2>
         <TimelineView timeline={timeline} places={places} />
       </main>
@@ -54,18 +59,10 @@ const Banner = () => (
   </div>
 );
 
-function Map() {
+function Map({ places, timeline }: { places: Place[]; timeline: Timeline[] }) {
   return (
     <div style={{ height: "200px", width: "100%" }}>
-      <div
-        style={{
-          backgroundColor: "gray",
-          borderRadius: "5%",
-          margin: "0 auto",
-          height: "80%",
-          width: "80%",
-        }}
-      ></div>
+      <InnerMap places={places} />
     </div>
   );
 }

@@ -14,8 +14,6 @@ interface Props {
 
 function Dranks({ dranks }: Props) {
   const { metadata, rows } = dranks;
-  console.log("metadata", metadata);
-  console.log("rows:", JSON.stringify(rows));
   return (
     <main>
       <h1>Drikkeoversikt</h1>

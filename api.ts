@@ -1,9 +1,8 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import fs from "fs";
 import { TimelineDAO } from "./models/timeline";
 import { PlaceDAO } from "./models/place";
 
-const auth_file = process.env.login_val || "";
+const auth_file = process.env.login_val || "{}";
 const auth_data = JSON.parse(auth_file.toString());
 const doc = new GoogleSpreadsheet(
   "1OCGy1rjHKagj7RdVOcbpCAAJCg-GI78f1lUTH60B5Ho"
@@ -67,8 +66,6 @@ export const getPlaces = async (): Promise<PlaceDAO[]> => {
     displayName: row["displayName"] || "",
   }));
 };
-// Load places into server memory
-getPlaces().then((placeList) => (places = placeList));
 
 export async function getDranks(): Promise<any> {
   await init_drank();
@@ -79,12 +76,14 @@ export async function getDranks(): Promise<any> {
     metadata: {
       header: placeNames.filter((name) => !!name),
     },
-    rows: rows.map((row) => {
-      const [name, ...amounts]: string[] = row._rawData || [];
-      return {
-        name,
-        amounts,
-      };
-    }),
+    rows: rows
+      .filter((row) => !!row._rawData[0])
+      .map((row) => {
+        const [name, ...amounts]: string[] = row._rawData || [];
+        return {
+          name,
+          amounts,
+        };
+      }),
   };
 }
