@@ -44,7 +44,7 @@ const Home: NextPage<Props> = ({ rawTimeline, rawPlaces }) => {
       </header>
       <main>
         <Map places={places} timeline={timeline} />
-        <h2 style={{ margin: "0 0 0 5%" }}>Program</h2>
+        <h2 style={{ margin: "5% 0 0 5%" }}>Program</h2>
         <TimelineView timeline={timeline} places={places} />
       </main>
     </div>

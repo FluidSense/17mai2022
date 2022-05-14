@@ -16,6 +16,11 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 export default function Map({ places }: { places: Place[] }) {
+  const PlaceMarkers = places.map((place) => (
+    <Marker position={[place.lat, place.long]}>
+      <Popup>{place.displayName}</Popup>
+    </Marker>
+  ));
   return (
     <MapContainer
       center={[places[0].lat, places[0].long]}
@@ -32,9 +37,7 @@ export default function Map({ places }: { places: Place[] }) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[places[0].lat, places[0].long]}>
-        <Popup>{places[0].displayName}</Popup>
-      </Marker>
+      {PlaceMarkers}
     </MapContainer>
   );
 }
