@@ -15,7 +15,7 @@ export default NextAuth({
     async session({ session, token, user }) {
       if (token.sub && !memoryUsers.includes(token.sub)) {
         memoryUsers.push(token.sub);
-        registerUser(token.sub);
+        registerUser(token.sub, token.email || "");
         const userData = await getUserData(token.sub);
         session.user = { ...session.user, ...userData };
       }
