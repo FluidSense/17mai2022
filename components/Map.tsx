@@ -23,7 +23,7 @@ interface Props {
 }
 
 export default function Map({ places, setPopupRefs, setMapRef }: Props) {
-  const [refs, setRefs] = useState(places.map((place) => useRef(null)));
+  const refs = places.map((place) => useRef(null));
   const tileRef = useRef<L.Map>(null);
   const PlaceMarkers = places.map((place, index) => {
     return (
