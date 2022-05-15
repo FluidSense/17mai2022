@@ -10,7 +10,7 @@ interface Props {
   completeTimeline: Timeline[];
   places: Place[];
   mapMarkerRefs: MutableRefObject<L.Popup | null>[];
-  mapRef: MutableRefObject<L.Map | null>;
+  mapRef?: MutableRefObject<L.Map | null>;
 }
 
 export default function TimelineView({
@@ -29,7 +29,7 @@ export default function TimelineView({
             const maybeRef = findMarkerForPlaceByRef(mapMarkerRefs, place);
             if (maybeRef?.current) {
               window.scrollTo(0, 0);
-              mapRef.current?.openPopup(maybeRef?.current);
+              mapRef?.current?.openPopup(maybeRef?.current);
             }
           }
         }
