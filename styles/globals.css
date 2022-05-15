@@ -87,9 +87,13 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Individual item */
 .bm-item {
-  display: block;
+  display: flex;
   padding: 3%;
   margin: 2%;
+  flex-direction: row;
+  align-items: center;
+  gap: 1em;
+  
 }
 
 /* Styling of overlay */

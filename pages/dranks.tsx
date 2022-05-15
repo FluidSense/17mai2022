@@ -140,6 +140,10 @@ function LoggedInFilters(props: UserFilters) {
 export async function getServerSideProps(context: NextPageContext) {
   const dranks = await getDranks();
   const { user } = (await getSession({ req: context.req })) || {};
+  context.res?.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
   return {
     props: {
       dranks,

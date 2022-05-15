@@ -55,6 +55,10 @@ export async function getServerSideProps(context: NextPageContext) {
   const rawTimeline = await getTimeline();
   const rawPlaces = await getPlaces();
   const { user } = (await getSession({ req: context.req })) || {};
+  context.res?.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
   return {
     props: {
       rawTimeline,
