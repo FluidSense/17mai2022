@@ -1,9 +1,13 @@
 
-#mainHeader {
+#mainH1 {
   margin: 0 5%;
   width: max-content;
 }
 
+.header {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+}
 
 .reversedFlag {
   width: 8%;

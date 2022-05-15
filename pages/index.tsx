@@ -12,8 +12,8 @@ import { NorwayFlag } from "../components/NorwayFlag";
 import { Timeline, TimelineDAO, timelineFromDAO } from "../models/timeline";
 import styles from "../styles/Home.module.css";
 import { TimelineIcon } from "../components/TimelineIcon";
-import Link from "next/link";
 import dynamic from "next/dynamic";
+import Nav from "../components/Nav";
 
 interface Props {
   rawTimeline: TimelineDAO[];
@@ -34,12 +34,8 @@ const Home: NextPage<Props> = ({ rawTimeline, rawPlaces }) => {
         <meta name="description" content="Gutta kødder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header>
-        <nav>
-          <Link href="/dranks">
-            <a>Drikkeoversikt</a>
-          </Link>
-        </nav>
+      <header className={styles.header}>
+        <Nav />
         <Banner />
       </header>
       <main>
@@ -54,7 +50,7 @@ const Home: NextPage<Props> = ({ rawTimeline, rawPlaces }) => {
 const Banner = () => (
   <div className={styles.banner}>
     <NorwayFlag className={styles.flag} />
-    <h1 id={styles.mainHeader}>17. Mai</h1>
+    <h1 id={styles.mainH1}>17. Mai</h1>
     <NorwayFlag className={styles.reversedFlag} />
   </div>
 );
