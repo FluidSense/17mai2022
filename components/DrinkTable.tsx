@@ -22,7 +22,7 @@ export default function DrinkTable({ drankData }: { drankData: DranksData }) {
           <Tr>
             <Th></Th>
             {drankData.metadata.header.map((title) => (
-              <Th>{title}</Th>
+              <Th key={title}>{title}</Th>
             ))}
           </Tr>
         </Thead>
