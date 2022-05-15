@@ -4,7 +4,13 @@ import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import "leaflet/dist/leaflet.css";
 import { Place } from "../models/place";
-import { MutableRefObject, Ref, useEffect, useRef, useState } from "react";
+import {
+  createRef,
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 let DefaultIcon = L.icon({
   //@ts-ignore
@@ -23,7 +29,7 @@ interface Props {
 }
 
 export default function Map({ places, setPopupRefs, setMapRef }: Props) {
-  const refs = places.map((place) => useRef(null));
+  const [refs, setRefs] = useState(places.map((place) => createRef<L.Popup>()));
   const tileRef = useRef<L.Map>(null);
   const PlaceMarkers = places.map((place, index) => {
     return (
