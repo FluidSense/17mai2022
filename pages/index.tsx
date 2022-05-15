@@ -10,6 +10,7 @@ import { Heading } from "@chakra-ui/react";
 import { getProviders, getSession } from "next-auth/react";
 import { User } from "../models/user";
 import TimelineView from "../components/Timeline";
+import { MutableRefObject, useState } from "react";
 
 interface Props {
   rawTimeline: TimelineDAO[];
@@ -24,29 +25,54 @@ const InnerMap = dynamic(() => import("../components/Map"), {
 const Home: NextPage<Props> = ({ rawTimeline, rawPlaces, user }) => {
   const timeline = rawTimeline.map((row) => timelineFromDAO(row));
   const places = rawPlaces.map((row) => placeFromDAO(row));
+  const [mapMarkerRefs, setMapMarkerRefs] = useState<
+    MutableRefObject<L.Popup | null>[]
+  >([]);
+  const [mapRef, setMapRef] = useState<MutableRefObject<L.Map | null>>();
   return (
     <div>
       <Head>
-        <title>17.Mai Veranda til veranda</title>
+        <title>17.Mai: Veranda til veranda</title>
         <meta name="description" content="Gutta kødder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header user={user} />
       <main>
-        <Map places={places} timeline={timeline} />
+        <Map
+          places={places}
+          timeline={timeline}
+          setPopupRefs={setMapMarkerRefs}
+          setMapRef={setMapRef}
+        />
         <Heading as="h2" size="xl" style={{ margin: "5% 0 0 5%" }}>
           Program
         </Heading>
-        <TimelineView completeTimeline={timeline} places={places} />
+        <TimelineView
+          completeTimeline={timeline}
+          places={places}
+          mapMarkerRefs={mapMarkerRefs}
+          mapRef={mapRef}
+        />
       </main>
     </div>
   );
 };
 
-function Map({ places, timeline }: { places: Place[]; timeline: Timeline[] }) {
+interface MapProps {
+  places: Place[];
+  timeline: Timeline[];
+  setPopupRefs: (refs: MutableRefObject<L.Popup | null>[]) => void;
+  setMapRef: (ref: MutableRefObject<L.Map | null>) => void;
+}
+
+function Map({ places, timeline, setPopupRefs, setMapRef }: MapProps) {
   return (
     <div style={{ height: "300px", width: "100%" }}>
-      <InnerMap places={places} />
+      <InnerMap
+        places={places}
+        setPopupRefs={setPopupRefs}
+        setMapRef={setMapRef}
+      />
     </div>
   );
 }

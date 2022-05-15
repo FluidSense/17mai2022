@@ -1,15 +1,19 @@
-import { Box, Text } from "@chakra-ui/react";
-import { time } from "console";
-import { getPlaceFromPlaceName, Place } from "../../models/place";
+import { Box, Button, Text } from "@chakra-ui/react";
+import { Place } from "../../models/place";
 import { Timeline } from "../../models/timeline";
 import { TimelineIcon } from "../TimelineIcon";
 
 interface Props {
   timeline: Timeline;
-  places: Place[];
+  place?: Place;
+  handleClick: () => void;
 }
 
-export default function TimelineLocation({ timeline, places }: Props) {
+export default function TimelineLocation({
+  timeline,
+  place,
+  handleClick,
+}: Props) {
   const datetimeToString = (datetime?: Date) =>
     datetime?.toLocaleTimeString("no-NB").substring(0, 5);
 
@@ -21,8 +25,9 @@ export default function TimelineLocation({ timeline, places }: Props) {
     timeline.arrival.getTime() < Date.now() &&
     timeline.departure &&
     timeline.departure.getTime() > Date.now();
+
   return (
-    <Box
+    <Button
       display="grid"
       gridTemplateColumns={"1fr 2fr 3fr"}
       gridTemplateRows={"repeat(3, 1fr)"}
@@ -32,10 +37,12 @@ export default function TimelineLocation({ timeline, places }: Props) {
       padding="5%"
       justifyContent="center"
       alignItems="center"
-      backgroundColor={isCompleted ? completedColor : undefined}
+      backgroundColor={isCompleted ? completedColor : "transparent"}
       borderRadius="10px"
       boxSizing="content-box"
       position="relative"
+      height="fit-content"
+      onClick={handleClick}
     >
       <TimelineIcon style={{ gridRow: 1 }} timelineType={timeline.type} />
       <TimelineIcon style={{ gridRow: 2 }} timelineType="wait" />
@@ -47,10 +54,10 @@ export default function TimelineLocation({ timeline, places }: Props) {
         {datetimeToString(timeline.departure)}
       </Text>
       <Text gridColumn="3" gridRow="1 / span 3">
-        {getPlaceFromPlaceName(places, timeline.placeId)?.displayName}
+        {place?.displayName}
       </Text>
       {isOngoing && <Loader />}
-    </Box>
+    </Button>
   );
 }
 

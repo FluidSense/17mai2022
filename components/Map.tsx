@@ -4,6 +4,7 @@ import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import "leaflet/dist/leaflet.css";
 import { Place } from "../models/place";
+import { MutableRefObject, Ref, useEffect, useRef, useState } from "react";
 
 let DefaultIcon = L.icon({
   //@ts-ignore
@@ -15,17 +16,32 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-export default function Map({ places }: { places: Place[] }) {
-  const PlaceMarkers = places.map((place) => (
-    <Marker key={place.name} position={[place.lat, place.long]}>
-      <Popup>{place.displayName}</Popup>
-    </Marker>
-  ));
+interface Props {
+  places: Place[];
+  setPopupRefs: (refs: MutableRefObject<L.Popup | null>[]) => void;
+  setMapRef: (ref: MutableRefObject<L.Map | null>) => void;
+}
+
+export default function Map({ places, setPopupRefs, setMapRef }: Props) {
+  const [refs, setRefs] = useState(places.map((place) => useRef(null)));
+  const tileRef = useRef<L.Map>(null);
+  const PlaceMarkers = places.map((place, index) => {
+    return (
+      <Marker key={place.name} position={[place.lat, place.long]}>
+        <Popup ref={refs[index]}>{place.displayName}</Popup>
+      </Marker>
+    );
+  });
+  useEffect(() => {
+    setPopupRefs(refs);
+    setMapRef(tileRef);
+  }, []);
   return (
     <MapContainer
       center={[places[0].lat, places[0].long]}
       zoom={13}
       scrollWheelZoom={false}
+      ref={tileRef}
       style={{
         height: "100%",
         margin: "auto",
