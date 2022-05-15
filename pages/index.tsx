@@ -1,6 +1,5 @@
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import { getTimeline, getPlaces } from "../api";
 import {
   getPlaceFromPlaceName,
@@ -8,12 +7,13 @@ import {
   PlaceDAO,
   placeFromDAO,
 } from "../models/place";
-import { NorwayFlag } from "../components/NorwayFlag";
 import { Timeline, TimelineDAO, timelineFromDAO } from "../models/timeline";
 import styles from "../styles/Home.module.css";
 import { TimelineIcon } from "../components/TimelineIcon";
 import dynamic from "next/dynamic";
 import Nav from "../components/Nav";
+import Header from "../components/Header";
+import { Heading } from "@chakra-ui/react";
 
 interface Props {
   rawTimeline: TimelineDAO[];
@@ -34,26 +34,17 @@ const Home: NextPage<Props> = ({ rawTimeline, rawPlaces }) => {
         <meta name="description" content="Gutta kødder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className={styles.header}>
-        <Nav />
-        <Banner />
-      </header>
+      <Header />
       <main>
         <Map places={places} timeline={timeline} />
-        <h2 style={{ margin: "5% 0 0 5%" }}>Program</h2>
+        <Heading as="h2" size="xl" style={{ margin: "5% 0 0 5%" }}>
+          Program
+        </Heading>
         <TimelineView timeline={timeline} places={places} />
       </main>
     </div>
   );
 };
-
-const Banner = () => (
-  <div className={styles.banner}>
-    <NorwayFlag className={styles.flag} />
-    <h1 id={styles.mainH1}>17. Mai</h1>
-    <NorwayFlag className={styles.reversedFlag} />
-  </div>
-);
 
 function Map({ places, timeline }: { places: Place[]; timeline: Timeline[] }) {
   return (

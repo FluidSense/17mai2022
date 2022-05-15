@@ -5,8 +5,11 @@ export default function Nav() {
   return (
     <section className="nav-bar-button">
       <Menu>
+        <Link href="/">
+          <a className="bm-item">Program</a>
+        </Link>
         <Link href="/dranks">
-          <a>Drikkeoversikt</a>
+          <a className="bm-item">Drikkeoversikt</a>
         </Link>
       </Menu>
     </section>

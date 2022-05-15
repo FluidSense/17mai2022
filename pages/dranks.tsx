@@ -1,61 +1,29 @@
 import Link from "next/link";
 import { getDranks } from "../api";
-
-type DrankOrder = { name: string; amounts: number[] };
-
-type DranksData = {
-  metadata: { header: string[] };
-  rows: DrankOrder[];
-};
+import DrinkTable from "../components/DrinkTable";
+import Header from "../components/Header";
+import { DranksData } from "../models/drank";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 interface Props {
   dranks: DranksData;
 }
 
 function Dranks({ dranks }: Props) {
-  const { metadata, rows } = dranks;
   return (
     <main>
-      <h1>Drikkeoversikt</h1>
-      <nav>
-        <Link href="/">
-          <a>Program</a>
-        </Link>
-      </nav>
-      <a
-        href="https://docs.google.com/spreadsheets/d/11HKEo7IeUHuAzFgqS0FYWnQiaLSAvxFk9Fe4DWnttEE/edit#gid=0"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Legg inn drikke
-      </a>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            {metadata.header.map((place) => (
-              <th key={place}>{place}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, index) => (
-            <Row key={row.name + index} name={row.name} amounts={row.amounts} />
-          ))}
-        </tbody>
-      </table>
+      <Header pageTitle="Drikkeoversikt" />
+      <Link href="https://docs.google.com/spreadsheets/d/11HKEo7IeUHuAzFgqS0FYWnQiaLSAvxFk9Fe4DWnttEE/edit#gid=0">
+        <a
+          style={{ margin: "5% 5% 0", display: "block" }}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Legg inn drikke <ExternalLinkIcon mx="2px" />
+        </a>
+      </Link>
+      <DrinkTable drankData={dranks} />
     </main>
-  );
-}
-
-function Row({ name, amounts }: DrankOrder) {
-  return (
-    <tr>
-      <td>{name}</td>
-      {amounts.map((amount, index) => (
-        <td key={name + amount + index}>{amount}</td>
-      ))}
-    </tr>
   );
 }
 
