@@ -1,6 +1,7 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { TimelineDAO } from "./models/timeline";
 import { PlaceDAO } from "./models/place";
+import { User } from "./models/user";
 
 const auth_file = process.env.login_val || "{}";
 const auth_data = JSON.parse(auth_file.toString());
@@ -85,5 +86,36 @@ export async function getDranks(): Promise<any> {
           amounts,
         };
       }),
+  };
+}
+
+export async function registerUser(id: string): Promise<void> {
+  await init();
+  const sheet = doc.sheetsByTitle["Users"];
+  const alreadyExists = await sheet
+    .getRows()
+    .then((rows) => rows.find((row) => row._rawData.includes(id)))
+    .then((result) => !!result);
+  if (alreadyExists) return;
+  sheet.addRow([id]);
+}
+
+export async function getUserData(
+  id: string
+): Promise<{ ownerOfPlace?: string; drankName?: string; drankPlace?: string }> {
+  await init();
+  const sheet = doc.sheetsByTitle["Users"];
+  const rows = await sheet.getRows();
+  const user = rows.find((row) => row["userId"] === id);
+  if (!user)
+    return {
+      ownerOfPlace: undefined,
+      drankName: undefined,
+      drankPlace: undefined,
+    };
+  return {
+    ownerOfPlace: user["ownerOfPlace"],
+    drankName: user["drankName"],
+    drankPlace: user["drankPlace"],
   };
 }

@@ -28,7 +28,6 @@ export default function Map({ places }: { places: Place[] }) {
       scrollWheelZoom={false}
       style={{
         height: "100%",
-        width: "80%",
         margin: "auto",
         borderRadius: "5px",
       }}

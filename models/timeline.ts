@@ -12,7 +12,14 @@ export type TimelineDAO = {
   type: string;
 };
 
-type TimelineType = "location" | "via" | "default";
+export type TimelineType =
+  | "arrival"
+  | "departure"
+  | "location"
+  | "via"
+  | "default"
+  | "walk"
+  | "wait";
 
 function isTimelineType(obj: any): obj is TimelineType {
   const valAsString = String(obj);
