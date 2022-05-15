@@ -1,9 +1,10 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { getUserData, registerUser } from "../../../api";
+import { User } from "../../../models/user";
 
 let memoryUsers: string[] = [];
-let populatedUsers: string[] = [];
+let populatedUsers: Record<string, User> = {};
 
 export default NextAuth({
   providers: [
@@ -17,17 +18,21 @@ export default NextAuth({
       if (token.sub && !memoryUsers.includes(token.sub)) {
         memoryUsers.push(token.sub);
         registerUser(token.sub, token.email || "");
-        const userData = await getUserData(token.sub);
-        session.user = { ...session.user, ...userData };
       }
-      if (token.sub && !populatedUsers.includes(token.sub)) {
-        const userData = await getUserData(token.sub);
-        session.user = { ...session.user, ...userData };
-        if (!!userData) {
-          populatedUsers.push(token.sub);
+      if (token.sub) {
+        const userdataInMemory = Object.keys(populatedUsers).includes(
+          token.sub
+        );
+        if (userdataInMemory) {
+          session.user = populatedUsers[token.sub];
+        } else {
+          const userData = await getUserData(token.sub);
+          session.user = { ...session.user, ...userData };
+          if (!!userData) {
+            populatedUsers[token.sub] = session.user;
+          }
         }
       }
-      session.sub = token.sub;
       return session;
     },
   },
