@@ -89,7 +89,7 @@ export async function getDranks(): Promise<any> {
   };
 }
 
-export async function registerUser(id: string): Promise<void> {
+export async function registerUser(id: string, email: string): Promise<void> {
   await init();
   const sheet = doc.sheetsByTitle["Users"];
   const alreadyExists = await sheet
@@ -97,7 +97,7 @@ export async function registerUser(id: string): Promise<void> {
     .then((rows) => rows.find((row) => row._rawData.includes(id)))
     .then((result) => !!result);
   if (alreadyExists) return;
-  sheet.addRow([id]);
+  sheet.addRow([id, "", "", "", email]);
 }
 
 export async function getUserData(

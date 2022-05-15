@@ -36,13 +36,15 @@ function Dranks({ dranks, user }: Props) {
           Legg inn drikke <ExternalLinkIcon mx="2px" />
         </a>
       </Link>
-      {!!user && (
+      {!!user ? (
         <LoggedInFilters
           setOnlyOwn={setShowOnlyOwn}
           showOnlyOwn={showOnlyOwn}
           setOnlyPlace={setOnlyPlace}
           showOnlyPlace={showOnlyPlace}
         />
+      ) : (
+        <Button disabled={true}>Logg inn for å filtere på dine ting</Button>
       )}
       <DrinkTable drankData={filteredDranks} />
     </main>
