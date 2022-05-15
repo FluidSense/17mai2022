@@ -28,7 +28,6 @@ export default NextAuth({
         }
       }
       session.sub = token.sub;
-      console.log("Session: ", session);
       return session;
     },
   },
