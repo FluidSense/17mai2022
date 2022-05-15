@@ -62,6 +62,7 @@ function UserMenu({ user }: { user?: User }) {
       />
     );
   });
+  avatar.displayName = "Avatar";
 
   useEffect(() => {
     // Hacketyhack to get my image back https://stackoverflow.com/questions/40570117/http403-forbidden-error-when-trying-to-load-img-src-with-google-profile-pic
