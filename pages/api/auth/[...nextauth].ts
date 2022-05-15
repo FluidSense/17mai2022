@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { getUserData, registerUser } from "../../../api";
 
 let memoryUsers: string[] = [];
+let populatedUsers: string[] = [];
 
 export default NextAuth({
   providers: [
@@ -19,7 +20,15 @@ export default NextAuth({
         const userData = await getUserData(token.sub);
         session.user = { ...session.user, ...userData };
       }
+      if (token.sub && !populatedUsers.includes(token.sub)) {
+        const userData = await getUserData(token.sub);
+        session.user = { ...session.user, ...userData };
+        if (!!userData) {
+          populatedUsers.push(token.sub);
+        }
+      }
       session.sub = token.sub;
+      console.log("Session: ", session);
       return session;
     },
   },
