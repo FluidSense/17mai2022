@@ -20,7 +20,7 @@ table {
   border-spacing: 0 1.5em;
 }
 
-nav {
+.nav-bar-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,9 +61,10 @@ Sidebar wrapper styles
 Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
 */
 .bm-menu-wrap {
-  position: absolute;
+  position: fixed;
   height: 100%;
   top: 0;
+  left: 0;
 }
 
 /* General sidebar styles */
@@ -91,5 +92,10 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Styling of overlay */
 .bm-overlay {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
   background: rgba(0, 0, 0, 0.3);
 }

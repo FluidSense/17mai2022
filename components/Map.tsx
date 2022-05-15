@@ -17,7 +17,7 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 export default function Map({ places }: { places: Place[] }) {
   const PlaceMarkers = places.map((place) => (
-    <Marker position={[place.lat, place.long]}>
+    <Marker key={place.name} position={[place.lat, place.long]}>
       <Popup>{place.displayName}</Popup>
     </Marker>
   ));
