@@ -27,7 +27,7 @@ const Home: NextPage<Props> = ({ rawTimeline, rawPlaces, user }) => {
   return (
     <div>
       <Head>
-        <title>17.05.2022 Veranda til veranda</title>
+        <title>17.Mai Veranda til veranda</title>
         <meta name="description" content="Gutta kødder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
