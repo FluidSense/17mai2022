@@ -30,7 +30,12 @@ export default function DrinkTable({ drankData }: { drankData: DranksData }) {
         </Thead>
         <Tbody>
           {cleanedRows.map((row, index) => (
-            <Row key={row.name + index} name={row.name} amounts={row.amounts} />
+            <Row
+              key={row.name + index}
+              name={row.name}
+              amounts={row.amounts}
+              columns={drankData.metadata.header.length}
+            />
           ))}
         </Tbody>
       </Table>
@@ -38,7 +43,7 @@ export default function DrinkTable({ drankData }: { drankData: DranksData }) {
   );
 }
 
-function Row({ name, amounts }: DrankOrder) {
+function Row({ name, amounts, columns }: DrankOrder & { columns: number }) {
   return (
     <Tr>
       <Td>
@@ -71,7 +76,12 @@ function ReversedTable({ drankData }: { drankData: DranksData }) {
         </Thead>
         <Tbody>
           {drankData.metadata.header.map((title, index) => (
-            <Row key={title} name={title} amounts={[row.amounts[index]]} />
+            <Row
+              key={title}
+              name={title}
+              amounts={[row.amounts[index]]}
+              columns={1}
+            />
           ))}
         </Tbody>
       </Table>

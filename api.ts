@@ -40,7 +40,12 @@ async function init_drank() {
 }
 
 export const getTimeline = async (): Promise<TimelineDAO[]> => {
-  await init();
+  try {
+    await init();
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
   const sheet = doc.sheetsByTitle["Timeline"];
   const rows = await sheet.getRows();
   return rows.map((row) => {
@@ -55,7 +60,12 @@ export const getTimeline = async (): Promise<TimelineDAO[]> => {
 };
 
 export const getPlaces = async (): Promise<PlaceDAO[]> => {
-  await init();
+  try {
+    await init();
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
   const sheet = doc.sheetsByTitle["Places"];
   const rows = await sheet.getRows();
   return rows.map((row) => ({
@@ -69,7 +79,17 @@ export const getPlaces = async (): Promise<PlaceDAO[]> => {
 };
 
 export async function getDranks(): Promise<any> {
-  await init_drank();
+  try {
+    await init_drank();
+  } catch (e) {
+    console.error(e);
+    return {
+      metadata: {
+        header: [],
+      },
+      rows: [],
+    };
+  }
   const sheet = drank_doc.sheetsByIndex[0];
   const rows = await sheet.getRows();
   const placeNames = sheet.headerValues;
@@ -90,7 +110,12 @@ export async function getDranks(): Promise<any> {
 }
 
 export async function registerUser(id: string, email: string): Promise<void> {
-  await init();
+  try {
+    await init();
+  } catch (e) {
+    console.error(e);
+    return;
+  }
   const sheet = doc.sheetsByTitle["Users"];
   const alreadyExists = await sheet
     .getRows()
@@ -103,16 +128,22 @@ export async function registerUser(id: string, email: string): Promise<void> {
 export async function getUserData(
   id: string
 ): Promise<{ ownerOfPlace?: string; drankName?: string; drankPlace?: string }> {
-  await init();
+  const dummy_user = {
+    ownerOfPlace: undefined,
+    drankName: undefined,
+    drankPlace: undefined,
+  };
+  try {
+    await init();
+  } catch (e) {
+    console.error(e);
+    return dummy_user;
+  }
+
   const sheet = doc.sheetsByTitle["Users"];
   const rows = await sheet.getRows();
   const user = rows.find((row) => row["userId"] === id);
-  if (!user)
-    return {
-      ownerOfPlace: undefined,
-      drankName: undefined,
-      drankPlace: undefined,
-    };
+  if (!user) return dummy_user;
   return {
     ownerOfPlace: user["ownerOfPlace"],
     drankName: user["drankName"],

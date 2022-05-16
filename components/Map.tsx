@@ -1,4 +1,4 @@
-import L from "leaflet";
+import L, { LatLngTuple } from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
@@ -42,9 +42,13 @@ export default function Map({ places, setPopupRefs, setMapRef }: Props) {
     setPopupRefs(refs);
     setMapRef(tileRef);
   }, []);
+
+  const center: LatLngTuple = !!places[0]
+    ? [places[0].lat, places[0].long]
+    : [0, 0];
   return (
     <MapContainer
-      center={[places[0].lat, places[0].long]}
+      center={center}
       zoom={13}
       scrollWheelZoom={false}
       ref={tileRef}
