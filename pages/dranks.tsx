@@ -67,10 +67,12 @@ function applyUserFilters(
       rows: dranks.rows.filter((row) => isRowOwner({ row, user })),
     };
   if (showOnlyPlace) {
-    const indexOfPlace = dranks.metadata.header.findIndex(
-      (name) => name === user.drankPlace
+    const commaseparatedPlaces = user.drankPlace?.split(",").filter(Boolean);
+    const indicesOfPlace = commaseparatedPlaces?.map((place) =>
+      dranks.metadata.header.findIndex((name) => name === place)
     );
-    if (indexOfPlace === -1) {
+    console.log("Comma-separated places ", commaseparatedPlaces);
+    if (indicesOfPlace?.every((index) => index === -1)) {
       return {
         metadata: {
           header: ["Feil"],
@@ -85,11 +87,14 @@ function applyUserFilters(
     } else {
       return {
         metadata: {
-          header: [user.drankPlace as string],
+          header: commaseparatedPlaces || [],
         },
         rows: dranks.rows.map((row) => ({
           name: row.name,
-          amounts: [row.amounts[indexOfPlace]],
+          amounts:
+            indicesOfPlace
+              ?.map((index) => row.amounts[index])
+              .filter(Boolean) || [],
         })),
       };
     }
