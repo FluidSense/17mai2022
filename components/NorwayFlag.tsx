@@ -1,4 +1,6 @@
-export const NorwayFlag = ({ className }: { className?: string }) => (
+import { SVGAttributes } from "react";
+
+export const NorwayFlag = (props: SVGAttributes<SVGElement>) => (
   <svg
     version="1.1"
     id="Layer_1"
@@ -6,7 +8,7 @@ export const NorwayFlag = ({ className }: { className?: string }) => (
     x="0px"
     y="0px"
     viewBox="0 0 512 512"
-    className={className}
+    {...props}
   >
     <g>
       <rect

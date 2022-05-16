@@ -1,6 +1,8 @@
 import {
   Avatar,
+  Box,
   Flex,
+  Grid,
   Heading,
   Menu,
   MenuButton,
@@ -10,7 +12,6 @@ import {
 import { signIn, signOut } from "next-auth/react";
 import { ForwardedRef, forwardRef, useEffect, useState } from "react";
 import { User } from "../models/user";
-import styles from "../styles/Home.module.css";
 import Nav from "./Nav";
 import { NorwayFlag } from "./NorwayFlag";
 
@@ -28,23 +29,23 @@ export default function Header({ pageTitle, user }: Props) {
     <Banner />
   );
   return (
-    <header className={styles.header}>
+    <Grid as="header" gridTemplateColumns="1fr 3fr 1fr" margin="5%">
       <Nav />
       {PageTitle}
       <UserMenu user={user} />
-    </header>
+    </Grid>
   );
 }
 
 function Banner() {
   return (
-    <div className={styles.banner}>
-      <NorwayFlag className={styles.flag} />
-      <Heading as="h1" size="xl" id={styles.mainH1}>
+    <Flex justifyContent="center" alignItems="center">
+      <NorwayFlag width="8%" />
+      <Heading as="h1" size="xl" margin="0 5%" width="max-content">
         17. Mai
       </Heading>
-      <NorwayFlag className={styles.reversedFlag} />
-    </div>
+      <NorwayFlag width="8%" transform="scaleX(-1)" />
+    </Flex>
   );
 }
 
