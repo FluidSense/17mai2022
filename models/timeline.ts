@@ -39,7 +39,7 @@ export function timelineFromDTO({
   return {
     arrival: !!arrival ? new Date(`2022-05-17T${arrival}`) : undefined,
     departure: !!departure ? new Date(`2022-05-17T${departure}`) : undefined,
-    type: isTimelineTypeFromCCMS(type) ? type : "default",
+    type: isTimelineTypeFromCMS(type) ? type : "default",
     placeId: place,
   };
 }

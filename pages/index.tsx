@@ -1,25 +1,21 @@
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import { getTimeline, getPlaces } from "../api";
-import { Place, PlaceDTO, placeFromDTO } from "../models/place";
-import { Timeline, TimelineDTO, timelineFromDTO } from "../models/timeline";
-import dynamic from "next/dynamic";
+import { PlaceDTO, placeFromDTO } from "../models/place";
+import { TimelineDTO, timelineFromDTO } from "../models/timeline";
 import Header from "../components/Header";
 import { Heading } from "@chakra-ui/react";
 import { getSession } from "next-auth/react";
 import { User } from "../models/user";
 import TimelineView from "../components/Timeline";
 import { MutableRefObject, useState } from "react";
+import Map from "../components/Map/ClientOnlyMap";
 
 interface Props {
   rawTimeline: TimelineDTO[];
   rawPlaces: PlaceDTO[];
   user?: User;
 }
-
-const InnerMap = dynamic(() => import("../components/Map"), {
-  ssr: false,
-});
 
 const Home: NextPage<Props> = ({ rawTimeline, rawPlaces, user }) => {
   const timeline = rawTimeline.map((row) => timelineFromDTO(row));
@@ -30,11 +26,7 @@ const Home: NextPage<Props> = ({ rawTimeline, rawPlaces, user }) => {
   const [mapRef, setMapRef] = useState<MutableRefObject<L.Map | null>>();
   return (
     <div>
-      <Head>
-        <title>17.Mai: Veranda til veranda</title>
-        <meta name="description" content="Gutta kødder" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <HeadInfo />
       <Header user={user} />
       <main>
         <Map
@@ -57,22 +49,13 @@ const Home: NextPage<Props> = ({ rawTimeline, rawPlaces, user }) => {
   );
 };
 
-interface MapProps {
-  places: Place[];
-  timeline: Timeline[];
-  setPopupRefs: (refs: MutableRefObject<L.Popup | null>[]) => void;
-  setMapRef: (ref: MutableRefObject<L.Map | null>) => void;
-}
-
-function Map({ places, timeline, setPopupRefs, setMapRef }: MapProps) {
+function HeadInfo() {
   return (
-    <div style={{ height: "300px", width: "100%" }}>
-      <InnerMap
-        places={places}
-        setPopupRefs={setPopupRefs}
-        setMapRef={setMapRef}
-      />
-    </div>
+    <Head>
+      <title>17.Mai: Veranda til veranda</title>
+      <meta name="description" content="Gutta kødder" />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
   );
 }
 

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getDranks } from "../api";
 import DrinkTable from "../components/DrinkTable";
 import Header from "../components/Header";
-import { DrankOrder, DranksData } from "../models/drank";
+import { applyUserFilters, DrankOrder, DranksData } from "../models/drank";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { getSession } from "next-auth/react";
 import { NextPageContext } from "next";
@@ -51,60 +51,6 @@ function Dranks({ dranks, user }: Props) {
   );
 }
 
-function isRowOwner({ row, user }: { row: DrankOrder; user: User }) {
-  return user.drankName == row.name;
-}
-
-function applyUserFilters(
-  dranks: DranksData,
-  user: User,
-  showOnlyOwn: boolean,
-  showOnlyPlace: boolean
-): DranksData {
-  if (showOnlyOwn)
-    return {
-      ...dranks,
-      rows: dranks.rows.filter((row) => isRowOwner({ row, user })),
-    };
-  if (showOnlyPlace) {
-    const commaseparatedPlaces = user.drankPlace
-      ?.split(",")
-      .map((place) => place.trim())
-      .filter(Boolean);
-    const indicesOfPlace = commaseparatedPlaces?.map((place) =>
-      dranks.metadata.header.findIndex((name) => name === place)
-    );
-    console.log("Comma-separated places ", commaseparatedPlaces);
-    if (indicesOfPlace?.every((index) => index === -1)) {
-      return {
-        metadata: {
-          header: ["Feil"],
-        },
-        rows: [
-          {
-            name: "Din bruker er ikke koblet opp mot et sted. Mas på Johannes.",
-            amounts: [],
-          },
-        ],
-      };
-    } else {
-      return {
-        metadata: {
-          header: commaseparatedPlaces || [],
-        },
-        rows: dranks.rows.map((row) => ({
-          name: row.name,
-          amounts:
-            indicesOfPlace
-              ?.map((index) => row.amounts[index])
-              .filter(Boolean) || [],
-        })),
-      };
-    }
-  }
-  return dranks;
-}
-
 interface UserFilters {
   showOnlyOwn: boolean;
   showOnlyPlace: boolean;
@@ -113,12 +59,12 @@ interface UserFilters {
 }
 
 function LoggedInFilters(props: UserFilters) {
-  function toggleOnlyOwn(e: any) {
+  function toggleOnlyOwn(_e: any) {
     props.setOnlyOwn(!props.showOnlyOwn);
     props.setOnlyPlace(false);
   }
 
-  function toggleOnlyPlace(e: any) {
+  function toggleOnlyPlace(_e: any) {
     props.setOnlyPlace(!props.showOnlyPlace);
     props.setOnlyOwn(false);
   }

@@ -8,7 +8,7 @@ import {
   TableContainer,
   Text,
 } from "@chakra-ui/react";
-import { DrankOrder, DranksData } from "../models/drank";
+import { DrankOrder, DranksData } from "../../models/drank";
 
 export default function DrinkTable({ drankData }: { drankData: DranksData }) {
   const cleanedRows = drankData.rows.filter(
