@@ -1,6 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { TimelineDAO } from "./models/timeline";
-import { PlaceDAO } from "./models/place";
+import { TimelineDTO } from "./models/timeline";
+import { PlaceDTO } from "./models/place";
 import { User } from "./models/user";
 
 const auth_file = process.env.login_val || "{}";
@@ -15,7 +15,7 @@ const drank_doc = new GoogleSpreadsheet(
 
 let initialized = false;
 let drank_initialized = false;
-export let places: PlaceDAO[] = [];
+export let places: PlaceDTO[] = [];
 
 async function init() {
   if (!initialized) {
@@ -39,7 +39,7 @@ async function init_drank() {
   }
 }
 
-export const getTimeline = async (): Promise<TimelineDAO[]> => {
+export const getTimeline = async (): Promise<TimelineDTO[]> => {
   try {
     await init();
   } catch (e) {
@@ -49,7 +49,7 @@ export const getTimeline = async (): Promise<TimelineDAO[]> => {
   const sheet = doc.sheetsByTitle["Timeline"];
   const rows = await sheet.getRows();
   return rows.map((row) => {
-    const assumeRow = row as unknown as TimelineDAO;
+    const assumeRow = row as unknown as TimelineDTO;
     return {
       arrival: assumeRow.arrival,
       departure: assumeRow.departure,
@@ -59,7 +59,7 @@ export const getTimeline = async (): Promise<TimelineDAO[]> => {
   });
 };
 
-export const getPlaces = async (): Promise<PlaceDAO[]> => {
+export const getPlaces = async (): Promise<PlaceDTO[]> => {
   try {
     await init();
   } catch (e) {

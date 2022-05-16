@@ -5,7 +5,7 @@ export type Timeline = {
   type: TimelineType;
 };
 
-export type TimelineDAO = {
+export type TimelineDTO = {
   arrival: string;
   departure: string;
   place: string;
@@ -30,12 +30,12 @@ function isTimelineType(obj: any): obj is TimelineType {
   );
 }
 
-export function timelineFromDAO({
+export function timelineFromDTO({
   arrival,
   departure,
   place,
   type,
-}: TimelineDAO): Timeline {
+}: TimelineDTO): Timeline {
   return {
     arrival: !!arrival ? new Date(`2022-05-17T${arrival}`) : undefined,
     departure: !!departure ? new Date(`2022-05-17T${departure}`) : undefined,

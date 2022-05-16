@@ -1,20 +1,19 @@
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import { getTimeline, getPlaces } from "../api";
-import { Place, PlaceDAO, placeFromDAO } from "../models/place";
-import { Timeline, TimelineDAO, timelineFromDAO } from "../models/timeline";
-import styles from "../styles/Home.module.css";
+import { Place, PlaceDTO, placeFromDTO } from "../models/place";
+import { Timeline, TimelineDTO, timelineFromDTO } from "../models/timeline";
 import dynamic from "next/dynamic";
 import Header from "../components/Header";
 import { Heading } from "@chakra-ui/react";
-import { getProviders, getSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { User } from "../models/user";
 import TimelineView from "../components/Timeline";
 import { MutableRefObject, useState } from "react";
 
 interface Props {
-  rawTimeline: TimelineDAO[];
-  rawPlaces: PlaceDAO[];
+  rawTimeline: TimelineDTO[];
+  rawPlaces: PlaceDTO[];
   user?: User;
 }
 
@@ -23,8 +22,8 @@ const InnerMap = dynamic(() => import("../components/Map"), {
 });
 
 const Home: NextPage<Props> = ({ rawTimeline, rawPlaces, user }) => {
-  const timeline = rawTimeline.map((row) => timelineFromDAO(row));
-  const places = rawPlaces.map((row) => placeFromDAO(row));
+  const timeline = rawTimeline.map((row) => timelineFromDTO(row));
+  const places = rawPlaces.map((row) => placeFromDTO(row));
   const [mapMarkerRefs, setMapMarkerRefs] = useState<
     MutableRefObject<L.Popup | null>[]
   >([]);

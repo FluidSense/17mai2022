@@ -7,7 +7,7 @@ export type Place = {
   displayName: string;
 };
 
-export type PlaceDAO = {
+export type PlaceDTO = {
   name: string;
   lat: string;
   long: string;
@@ -17,14 +17,14 @@ export type PlaceDAO = {
 };
 
 // Constructors
-export function placeFromDAO({
+export function placeFromDTO({
   name,
   lat,
   long,
   url,
   description,
   displayName,
-}: PlaceDAO): Place {
+}: PlaceDTO): Place {
   return {
     name,
     lat: Number(lat),
