@@ -4,6 +4,10 @@ Oversiktsside for veranda-til-veranda-arrangement
 
 ## Oppstart
 
+Installer avhengigheter med:  
+`npm i --legacy-peer-deps`  
+Dette fordi enkelte komponenter ikke har oppgradert sin kompatibilitetstatus til å matche React 18 selv om de fungerer fint med det.
+
 ```bash
 npm run dev
 # or
