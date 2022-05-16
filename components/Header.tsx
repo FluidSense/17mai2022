@@ -44,7 +44,7 @@ function Banner() {
       <Heading as="h1" size="xl" margin="0 5%" width="max-content">
         17. Mai
       </Heading>
-      <NorwayFlag width="8%" transform="scaleX(-1)" />
+      <NorwayFlag width="8%" style={{ transform: "scaleX(-1)" }} />
     </Flex>
   );
 }

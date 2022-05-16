@@ -11,6 +11,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { Flex } from "@chakra-ui/react";
+import Link from "next/link";
 
 let DefaultIcon = L.icon({
   //@ts-ignore
@@ -34,7 +36,14 @@ export default function Map({ places, setPopupRefs, setMapRef }: Props) {
   const PlaceMarkers = places.map((place, index) => {
     return (
       <Marker key={place.name} position={[place.lat, place.long]}>
-        <Popup ref={refs[index]}>{place.displayName}</Popup>
+        <Popup ref={refs[index]}>
+          <Flex direction="column" justifyContent="space-evenly">
+            {place.displayName}
+            <Link href={place.url || ""}>
+              <a>Åpne i Google Maps</a>
+            </Link>
+          </Flex>
+        </Popup>
       </Marker>
     );
   });
