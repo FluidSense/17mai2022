@@ -52,6 +52,11 @@ function Row({ name, amounts, columns }: DrankOrder & { columns: number }) {
       {amounts.map((amount, index) => (
         <Td key={name + amount + index}>{amount}</Td>
       ))}
+      {Array.from(Array(columns - amounts.length).keys()).map(
+        (_fill, index) => (
+          <Td key={name + "-fillCell-" + index}></Td>
+        )
+      )}
     </Tr>
   );
 }
