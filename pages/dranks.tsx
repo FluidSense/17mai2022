@@ -67,7 +67,10 @@ function applyUserFilters(
       rows: dranks.rows.filter((row) => isRowOwner({ row, user })),
     };
   if (showOnlyPlace) {
-    const commaseparatedPlaces = user.drankPlace?.split(",").filter(Boolean);
+    const commaseparatedPlaces = user.drankPlace
+      ?.split(",")
+      .map((place) => place.trim())
+      .filter(Boolean);
     const indicesOfPlace = commaseparatedPlaces?.map((place) =>
       dranks.metadata.header.findIndex((name) => name === place)
     );
