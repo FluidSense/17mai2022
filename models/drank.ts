@@ -26,7 +26,6 @@ export function applyUserFilters(
     const indicesOfPlace = commaseparatedPlaces?.map((place) =>
       dranks.metadata.header.findIndex((name) => name === place)
     );
-    console.log("Comma-separated places ", commaseparatedPlaces);
     if (indicesOfPlace?.every((index) => index === -1)) {
       return {
         metadata: {
