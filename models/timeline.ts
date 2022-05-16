@@ -3,6 +3,7 @@ export type Timeline = {
   departure?: Date;
   placeId: string;
   type: TimelineType;
+  description?: string;
 };
 
 export type TimelineDTO = {
@@ -10,6 +11,7 @@ export type TimelineDTO = {
   departure: string;
   place: string;
   type: string;
+  description: string;
 };
 
 export type TimelineType =
@@ -35,12 +37,14 @@ export function timelineFromDTO({
   departure,
   place,
   type,
+  description,
 }: TimelineDTO): Timeline {
   return {
     arrival: !!arrival ? new Date(`2022-05-17T${arrival}`) : undefined,
     departure: !!departure ? new Date(`2022-05-17T${departure}`) : undefined,
     type: isTimelineTypeFromCMS(type) ? type : "default",
     placeId: place,
+    description: !!description ? description : undefined,
   };
 }
 

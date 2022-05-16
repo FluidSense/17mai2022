@@ -55,6 +55,7 @@ export const getTimeline = async (): Promise<TimelineDTO[]> => {
       departure: assumeRow.departure,
       place: assumeRow.place,
       type: assumeRow.type,
+      description: assumeRow.description || "",
     };
   });
 };

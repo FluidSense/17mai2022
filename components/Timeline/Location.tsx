@@ -53,8 +53,11 @@ export default function TimelineLocation({
       <Text gridColumn={2} gridRow="3">
         {datetimeToString(timeline.departure)}
       </Text>
-      <Text gridColumn="3" gridRow="1 / span 3">
+      <Text gridColumn="3" gridRow="1">
         {place?.displayName}
+      </Text>
+      <Text gridColumn="3" gridRow="3" fontWeight="normal">
+        {timeline.description}
       </Text>
       {isOngoing && <Loader />}
     </Button>
