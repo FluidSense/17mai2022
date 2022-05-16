@@ -32,10 +32,10 @@ function Costs({ user }: Props) {
   return (
     <main>
       <Header pageTitle="Cost" user={user} />
-      <FileUploadButton onChange={handleCsv} width="100%">
-        Upload CSV
-      </FileUploadButton>
       <Data data={data} />
+      <FileUploadButton onChange={handleCsv} width="100%">
+        Last opp CSV med transaksjoner
+      </FileUploadButton>
     </main>
   );
 }

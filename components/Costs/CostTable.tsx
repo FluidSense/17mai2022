@@ -27,15 +27,15 @@ const CostTable = (props: CostTableProps) => {
   return (
     <TableContainer>
       <Table variant="simple">
-        <TableCaption>Cost overview for balkong til balkong</TableCaption>
+        <TableCaption>Kostnadsoversikt for veranda til veranda</TableCaption>
         <Thead>
           <Tr>
-            <Th>Name</Th>
-            <Th>Phone</Th>
+            <Th>Navn</Th>
+            <Th>Nummer</Th>
             {sectionNames.map((name, index) => (
               <Th key={`${name}-{${index}`}>{name}</Th>
             ))}
-            <Th isNumeric>Total cost</Th>
+            <Th isNumeric>Total kostnad</Th>
           </Tr>
         </Thead>
         <Tbody>

@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from "@chakra-ui/react";
+import { Button, ButtonProps, Container } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import React, { FC } from "react";
 
@@ -19,15 +19,17 @@ const FileUploadButton: FC<Props> = ({ children, onChange, ...rest }) => {
   };
 
   return (
-    <Button as="label" htmlFor="file-upload" {...rest}>
-      <HiddenUploadInput
-        type="file"
-        accept=".csv"
-        id="file-upload"
-        onChange={handleFileUploaded}
-      />
-      {children}
-    </Button>
+    <Container>
+      <Button as="label" htmlFor="file-upload" {...rest}>
+        <HiddenUploadInput
+          type="file"
+          accept=".csv"
+          id="file-upload"
+          onChange={handleFileUploaded}
+        />
+        {children}
+      </Button>
+    </Container>
   );
 };
 

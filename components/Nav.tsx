@@ -38,6 +38,12 @@ export default function Nav() {
             Favrit Admin
           </a>
         </Link>
+        <Link href="/cash">
+          <a onClick={() => handleClick("/cash")} className="bm-item">
+            Kostnadsoversikt
+            {isLoading && route.asPath !== "/cash" && <Spinner size="xs" />}
+          </a>
+        </Link>
       </Menu>
     </section>
   );
