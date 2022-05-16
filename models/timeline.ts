@@ -21,7 +21,7 @@ export type TimelineType =
   | "walk"
   | "wait";
 
-function isTimelineType(obj: any): obj is TimelineType {
+function isTimelineTypeFromCMS(obj: any): obj is TimelineType {
   const valAsString = String(obj);
   return (
     valAsString === "location" ||
@@ -39,7 +39,7 @@ export function timelineFromDTO({
   return {
     arrival: !!arrival ? new Date(`2022-05-17T${arrival}`) : undefined,
     departure: !!departure ? new Date(`2022-05-17T${departure}`) : undefined,
-    type: isTimelineType(type) ? type : "default",
+    type: isTimelineTypeFromCCMS(type) ? type : "default",
     placeId: place,
   };
 }
