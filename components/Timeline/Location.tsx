@@ -56,7 +56,12 @@ export default function TimelineLocation({
       <Text gridColumn="3" gridRow="1">
         {place?.displayName}
       </Text>
-      <Text gridColumn="3" gridRow="3" fontWeight="normal">
+      <Text
+        gridColumn="3"
+        gridRow="2 / span 2"
+        fontWeight="normal"
+        style={{ wordWrap: "break-word", whiteSpace: "normal" }}
+      >
         {timeline.description}
       </Text>
       {isOngoing && <Loader />}

@@ -44,7 +44,15 @@ export const getTimeline = async (): Promise<TimelineDTO[]> => {
     await init();
   } catch (e) {
     console.error(e);
-    return [];
+    return [
+      {
+        arrival: "09:00",
+        departure: "11:00",
+        place: "KA",
+        type: "location",
+        description: "Frokost - Ta med drikke selv. Ringeklokke 505",
+      },
+    ];
   }
   const sheet = doc.sheetsByTitle["Timeline"];
   const rows = await sheet.getRows();
