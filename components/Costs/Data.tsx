@@ -1,4 +1,4 @@
-import { Container, Spacer, Text } from "@chakra-ui/react";
+import { Container, Spinner } from "@chakra-ui/react";
 import CostTable from "./CostTable";
 import { csvType } from "./types";
 
@@ -12,9 +12,7 @@ const Data = (props: DataProps) => {
   if (!data.length) {
     return (
       <Container style={{ paddingBottom: "20px", textAlign: "center" }}>
-        <Text>
-          Last opp en CSV med transaksjonsdata for å se kostnadsoversikten
-        </Text>
+        <Spinner />
       </Container>
     );
   }
