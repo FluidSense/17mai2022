@@ -1,6 +1,8 @@
 import {
   Avatar,
+  AvatarProps,
   Box,
+  ComponentWithAs,
   Flex,
   Grid,
   Heading,
@@ -10,7 +12,7 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import { signIn, signOut } from "next-auth/react";
-import { ForwardedRef, forwardRef, useEffect, useState } from "react";
+import { ForwardedRef, forwardRef, useEffect, useRef, useState } from "react";
 import { User } from "../models/user";
 import Nav from "./Nav";
 import { NorwayFlag } from "./NorwayFlag";
@@ -47,6 +49,27 @@ function Banner() {
       <NorwayFlag width="8%" style={{ transform: "scaleX(-1)" }} />
     </Flex>
   );
+}
+
+export function GoogleImageAvatar({
+  name,
+  image,
+  ...props
+}: {
+  name: string;
+  image: string;
+} & AvatarProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    // Hacketyhack to get my image back https://stackoverflow.com/questions/40570117/http403-forbidden-error-when-trying-to-load-img-src-with-google-profile-pic
+    if (ref) {
+      //@ts-ignore
+      ref.current.referrerpolicy = "no-referrer";
+    }
+  }, [ref]);
+
+  return <Avatar ref={ref} name={name} src={image} size="sm" {...props} />;
 }
 
 function UserMenu({ user }: { user?: User }) {
