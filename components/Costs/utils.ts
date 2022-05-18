@@ -1,4 +1,4 @@
-import { csvType, transformedCostData } from "./types";
+import { csvType, section, transformedCostData } from "./types";
 
 export const groupBy = <T, K extends keyof any>(
   list: T[],
@@ -39,26 +39,42 @@ export const transformParseResult = (
       (i) => i.menu_info.sectionName as string
     );
 
-    const costsPerSection = Object.keys(groupedBySection).map((sectionName) => {
-      const dataForSection = groupedBySection[sectionName];
+    const sections: Record<string, section> = {};
 
-      const costForSection = dataForSection.reduce(
+    Object.keys(groupedBySection).map((sectionName) => {
+      const ordersForSection = groupedBySection[sectionName];
+
+      const purchases = ordersForSection.map((o) => ({
+        itemName: o.item_name,
+        amount: Number(o.amount),
+      }));
+
+      const costForSection = ordersForSection.reduce(
         (acc, curr) => acc + Number(curr.amount),
         0
       );
 
-      return { sectionName: sectionName, sectionCost: costForSection };
+      const section: section = {
+        purchases: purchases,
+        sectionCost: costForSection,
+      };
+
+      sections[sectionName] = section;
     });
 
+    const costsPerSection = Object.keys(sections).map(
+      (sectionName) => sections[sectionName].sectionCost
+    );
+
     const totalCostForNumber = costsPerSection.reduce(
-      (acc, curr) => acc + curr.sectionCost,
+      (acc, curr) => acc + curr,
       0
     );
 
     const transformed: transformedCostData = {
       name: dataForNumber[0].name,
       phone: number,
-      costs: costsPerSection,
+      sections: sections,
       totalCost: totalCostForNumber,
     };
 

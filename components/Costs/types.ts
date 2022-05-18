@@ -12,6 +12,11 @@ export type csvType = {
 export type transformedCostData = {
   name: string;
   phone: string;
-  costs: { sectionName: string; sectionCost: number }[];
   totalCost: number;
+  sections: Record<string, section>;
+};
+
+export type section = {
+  purchases: { itemName: string; amount: number }[];
+  sectionCost: number;
 };

@@ -3,11 +3,11 @@ import {
   TableCaption,
   TableContainer,
   Tbody,
-  Td,
   Th,
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import CostTableLine from "./CostTableLine";
 import { csvType } from "./types";
 import { transformParseResult } from "./utils";
 
@@ -26,7 +26,7 @@ const CostTable = (props: CostTableProps) => {
         .filter((d) => d.menu_info)
         .map((d) => JSON.parse(d.menu_info).sectionName)
     )
-  );
+  ) as string[];
 
   return (
     <TableContainer>
@@ -44,25 +44,11 @@ const CostTable = (props: CostTableProps) => {
         </Thead>
         <Tbody>
           {transformed.map((person) => (
-            <Tr key={`${person.phone}`}>
-              <Td>{person.name}</Td>
-              <Td>{person.phone}</Td>
-              {sectionNames.map((name, index) => {
-                const costForSection = person.costs.find(
-                  (c) => c.sectionName === name
-                );
-
-                if (costForSection) {
-                  return (
-                    <Td key={`${name}-{${index}-${person.phone}`}>
-                      {costForSection.sectionCost}
-                    </Td>
-                  );
-                }
-                return <Td key={`${name}-{${index}-${person.phone}`}>NA</Td>;
-              })}
-              <Td isNumeric>{person.totalCost}</Td>
-            </Tr>
+            <CostTableLine
+              person={person}
+              sectionNames={sectionNames}
+              key={`${person.phone}`}
+            />
           ))}
         </Tbody>
       </Table>
