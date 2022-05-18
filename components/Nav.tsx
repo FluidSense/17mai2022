@@ -1,16 +1,20 @@
 import { Spinner } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { slide as Menu } from "react-burger-menu";
 
 export default function Nav() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingRoute, setLoadingRoute] = useState<string>("");
   const route = useRouter();
+
+  useEffect(() => {
+    setLoadingRoute("");
+  }, [route.asPath]);
 
   function handleClick(clickedRoute: string) {
     if (route.asPath !== clickedRoute) {
-      setIsLoading(true);
+      setLoadingRoute(clickedRoute);
     }
   }
   return (
@@ -19,13 +23,13 @@ export default function Nav() {
         <Link href="/">
           <a onClick={() => handleClick("/")} className="bm-item">
             Program
-            {isLoading && route.asPath !== "/" && <Spinner size="xs" />}
+            {loadingRoute === "/" && <Spinner size="xs" />}
           </a>
         </Link>
         <Link href="/dranks">
           <a onClick={() => handleClick("/dranks")} className="bm-item">
             Drikkeoversikt
-            {isLoading && route.asPath !== "/dranks" && <Spinner size="xs" />}
+            {loadingRoute === "/dranks" && <Spinner size="xs" />}
           </a>
         </Link>
         <Link href="https://qa.favrit.com/en-gb/menu/location/La6Bdajr8nD">
@@ -41,7 +45,7 @@ export default function Nav() {
         <Link href="/cash">
           <a onClick={() => handleClick("/cash")} className="bm-item">
             Kostnadsoversikt
-            {isLoading && route.asPath !== "/cash" && <Spinner size="xs" />}
+            {loadingRoute === "/cash" && <Spinner size="xs" />}
           </a>
         </Link>
       </Menu>
