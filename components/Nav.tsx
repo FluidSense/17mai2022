@@ -32,6 +32,13 @@ export default function Nav() {
             {loadingRoute === "/dranks" && <Spinner size="xs" />}
           </a>
         </Link>
+        <Link href="/score">
+          <a onClick={() => handleClick("/score")} className="bm-item">
+            Poeng
+            {loadingRoute === "/score" && <Spinner size="xs" />}
+          </a>
+        </Link>
+
         <Link href="https://qa.favrit.com/en-gb/menu/location/La6Bdajr8nD">
           <a target="_blank" className="bm-item">
             Favrit
