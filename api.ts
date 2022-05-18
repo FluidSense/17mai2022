@@ -2,6 +2,7 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import { TimelineDTO } from "./models/timeline";
 import { PlaceDTO } from "./models/place";
 import { User } from "./models/user";
+import { ScoreDTO, ScoreTable } from "./models/score";
 
 const auth_file = process.env.login_val || "{}";
 const auth_data = JSON.parse(auth_file.toString());
@@ -44,15 +45,7 @@ export const getTimeline = async (): Promise<TimelineDTO[]> => {
     await init();
   } catch (e) {
     console.error(e);
-    return [
-      {
-        arrival: "09:00",
-        departure: "11:00",
-        place: "KA",
-        type: "location",
-        description: "Frokost - Ta med drikke selv. Ringeklokke 505",
-      },
-    ];
+    return [];
   }
   const sheet = doc.sheetsByTitle["Timeline"];
   const rows = await sheet.getRows();
@@ -118,7 +111,11 @@ export async function getDranks(): Promise<any> {
   };
 }
 
-export async function registerUser(id: string, email: string): Promise<void> {
+export async function registerUser(
+  id: string,
+  email: string,
+  picture: string
+): Promise<void> {
   try {
     await init();
   } catch (e) {
@@ -126,12 +123,22 @@ export async function registerUser(id: string, email: string): Promise<void> {
     return;
   }
   const sheet = doc.sheetsByTitle["Users"];
-  const alreadyExists = await sheet
-    .getRows()
-    .then((rows) => rows.find((row) => row._rawData.includes(id)))
-    .then((result) => !!result);
-  if (alreadyExists) return;
-  sheet.addRow([id, "", "", "", email]);
+  const rows = sheet.getRows();
+  const maybeUser = await rows.then((rows) =>
+    rows.find((row) => row._rawData.includes(id))
+  );
+
+  const alreadyExists = !!maybeUser;
+  if (alreadyExists) {
+    // Add check for image, to add image to existing users as well.
+    if (!maybeUser["picture"]) {
+      maybeUser.picture = picture;
+      await maybeUser.save();
+    }
+    return;
+  }
+
+  sheet.addRow([id, "", "", "", email, picture]);
 }
 
 export async function getUserData(
@@ -157,5 +164,57 @@ export async function getUserData(
     ownerOfPlace: user["ownerOfPlace"],
     drankName: user["drankName"],
     drankPlace: user["drankPlace"],
+  };
+}
+
+export async function getUserImages(): Promise<
+  { name: string; url: string }[]
+> {
+  try {
+    await init();
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+
+  const sheet = doc.sheetsByTitle["Users"];
+  const rows = await sheet.getRows();
+  return rows.map((row) => ({
+    name: row["scoreName"] || "",
+    url: row["picture"] || "",
+  }));
+}
+
+export async function getScore(): Promise<ScoreTable> {
+  try {
+    await init();
+  } catch (e) {
+    console.error(e);
+    return {
+      metadata: {
+        finished: 0,
+        total: 0,
+      },
+      rows: [],
+    };
+  }
+  const sheet = doc.sheetsByTitle["Score"];
+  const rows = await sheet.getRows();
+  const header = sheet.headerValues;
+  return {
+    metadata: {
+      finished: rows[0]._rawData.filter(Boolean).length,
+      total: header.length,
+    },
+    rows: rows.map((row) => {
+      const [name, ...amounts] = row._rawData;
+      return {
+        name,
+        score: amounts
+          .map(Number)
+          .filter(Boolean)
+          .reduce((partialSum: number, a: number) => partialSum + a, 0),
+      };
+    }),
   };
 }
