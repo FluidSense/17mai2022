@@ -51,7 +51,11 @@ export default function ScorePage({ scoreTable, user, userImages }: Props) {
         margin="10% auto"
       >
         {rest.map((player) => (
-          <PlayerRow {...player} url={getImageForPlayer(player)} />
+          <PlayerRow
+            {...player}
+            key={player.name + player.score}
+            url={getImageForPlayer(player)}
+          />
         ))}
       </VStack>
     </main>
