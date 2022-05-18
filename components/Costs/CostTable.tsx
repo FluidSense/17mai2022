@@ -21,13 +21,17 @@ const CostTable = (props: CostTableProps) => {
   const transformed = transformParseResult(data);
 
   const sectionNames = Array.from(
-    new Set(data.map((c) => JSON.parse(c.menu_info).sectionName))
+    new Set(
+      data
+        .filter((d) => d.menu_info)
+        .map((d) => JSON.parse(d.menu_info).sectionName)
+    )
   );
 
   return (
     <TableContainer>
       <Table variant="simple">
-        <TableCaption>Kostnadsoversikt for veranda til veranda</TableCaption>
+        <TableCaption>Kostnadsoversikt for balkong til balkong</TableCaption>
         <Thead>
           <Tr>
             <Th>Navn</Th>
@@ -44,10 +48,14 @@ const CostTable = (props: CostTableProps) => {
               <Td>{person.name}</Td>
               <Td>{person.phone}</Td>
               {sectionNames.map((name, index) => {
-                if (person.costs[index]) {
+                const costForSection = person.costs.find(
+                  (c) => c.sectionName === name
+                );
+
+                if (costForSection) {
                   return (
                     <Td key={`${name}-{${index}-${person.phone}`}>
-                      {person.costs[index].sectionCost}
+                      {costForSection.sectionCost}
                     </Td>
                   );
                 }

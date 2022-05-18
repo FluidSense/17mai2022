@@ -3,10 +3,9 @@ import { DranksData } from "../models/drank";
 import { getSession } from "next-auth/react";
 import { NextPageContext } from "next";
 import { User } from "../models/user";
-import FileUploadButton from "../components/Costs/FileUpload";
 import Papa from "papaparse";
 import { csvType } from "../components/Costs/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Data from "../components/Costs/Data";
 
 interface Props {
@@ -17,25 +16,25 @@ interface Props {
 function Costs({ user }: Props) {
   const [data, setData] = useState<csvType[]>([]);
 
-  const handleCsv = (files: File[]) => {
-    const file = files[0]; // We only allow 1 file.
-    Papa.parse<csvType>(file, {
-      header: true,
-      skipEmptyLines: true,
-      complete: (results) => {
-        setData(results.data);
-      },
-      encoding: "ISO-8859-1",
-    });
-  };
+  useEffect(() => {
+    fetch("./btbfavrit.csv")
+      .then((file) => file.text())
+      .then((csv) => {
+        Papa.parse<csvType>(csv, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+            setData(results.data);
+          },
+          encoding: "ISO-8859-1",
+        });
+      });
+  }, [setData]);
 
   return (
     <main>
       <Header pageTitle="Cost" user={user} />
       <Data data={data} />
-      <FileUploadButton onChange={handleCsv} width="100%">
-        Last opp CSV med transaksjoner
-      </FileUploadButton>
     </main>
   );
 }
