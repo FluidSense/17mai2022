@@ -6,9 +6,12 @@ import {
   Th,
   Thead,
   Tr,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import CostTableLine from "./CostTableLine";
-import { csvType } from "./types";
+import Purchases from "./Purchases";
+import { csvType, section } from "./types";
 import { transformParseResult } from "./utils";
 
 type CostTableProps = {
@@ -17,6 +20,8 @@ type CostTableProps = {
 
 const CostTable = (props: CostTableProps) => {
   const { data } = props;
+  const modal = useDisclosure();
+  const [selectedSection, setSelectedSection] = useState<section>();
 
   const transformed = transformParseResult(data);
 
@@ -48,10 +53,21 @@ const CostTable = (props: CostTableProps) => {
               person={person}
               sectionNames={sectionNames}
               key={`${person.phone}`}
+              modal={modal}
+              setSelectedSection={setSelectedSection}
             />
           ))}
         </Tbody>
       </Table>
+      {modal.isOpen && selectedSection ? (
+        <Purchases
+          isOpen={modal.isOpen}
+          onClose={modal.onClose}
+          selectedSection={selectedSection}
+        />
+      ) : (
+        <></>
+      )}
     </TableContainer>
   );
 };
