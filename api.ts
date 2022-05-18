@@ -1,8 +1,7 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { TimelineDTO } from "./models/timeline";
 import { PlaceDTO } from "./models/place";
-import { User } from "./models/user";
-import { ScoreDTO, ScoreTable } from "./models/score";
+import { ScoreTable } from "./models/score";
 
 const auth_file = process.env.login_val || "{}";
 const auth_data = JSON.parse(auth_file.toString());
