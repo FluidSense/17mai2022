@@ -1,4 +1,10 @@
 item_name;name;phone;menu_info;amount;currency;quantity;created;location_id
+Hanse Mango IPA Lite (0.5 L);Pål;4797773901;"{""sectionName"":""Pål"",""orderType"":""DIRECT"",""sectionId"":""7c4fae73-4212-4ff6-a49b-fff6da57b2c7""}";42;NOK;1;2022-05-18 17:40:40.392659;516278
+Frydenlund Fatøl (0.5 L);Pål;4797773901;"{""sectionName"":""PP"",""orderType"":""DIRECT"",""sectionId"":""ebbf1670-9b11-4f5a-bbfa-bcf8220e6376""}";32;NOK;1;2022-05-18 17:39:32.582379;516278
+Somersby Peach Bellini (0.5 L);Pål;4797773901;"{""sectionName"":""Adrian"",""orderType"":""DIRECT"",""sectionId"":""9069b70c-4bad-4850-89b9-e8cb13176c8c""}";47;NOK;1;2022-05-18 17:39:32.579021;516278
+Hansa Mango IPA Lite  (0.5 L);Pål;4797773901;"{""sectionName"":""Adrian"",""orderType"":""DIRECT"",""sectionId"":""9069b70c-4bad-4850-89b9-e8cb13176c8c""}";39;NOK;1;2022-05-18 17:39:32.575731;516278
+Hansa Mango IPA  (0.5 L );Pål;4797773901;"{""sectionName"":""Peter"",""orderType"":""DIRECT"",""sectionId"":""e95fe42f-fe0c-4381-ac88-3fc817aabde6""}";38;NOK;1;2022-05-18 17:39:32.572359;516278
+Frydenlund Juicy IPA (0.5 L );Pål;4797773901;"{""sectionName"":""Peter"",""orderType"":""DIRECT"",""sectionId"":""e95fe42f-fe0c-4381-ac88-3fc817aabde6""}";39;NOK;1;2022-05-18 17:39:32.568437;516278
 Brewdog Nanny State (0.33 L );Endre Ulberg;4790070458;"{""sectionName"":""Aslak og Endre"",""orderType"":""DIRECT"",""sectionId"":""ff33e2ca-ae25-422e-81e1-9b405472b184""}";20;NOK;1;2022-05-17 22:47:02.924809;516278
 Aas Lite (0.5 L );Aslak Hollund;4747304656;"{""sectionName"":""Aslak og Endre"",""orderType"":""DIRECT"",""sectionId"":""ff33e2ca-ae25-422e-81e1-9b405472b184""}";32;NOK;1;2022-05-17 22:46:13.675511;516278
 Brewdog Nanny State (0.33 L );August Sollesnes Solvang;4790145211;"{""sectionName"":""Aslak og Endre"",""orderType"":""DIRECT"",""sectionId"":""ff33e2ca-ae25-422e-81e1-9b405472b184""}";20;NOK;1;2022-05-17 22:42:05.365213;516278
@@ -13,7 +19,7 @@ Frydenlund Juicy IPA (0.33 L);Adrian Thompson;4748239548;"{""sectionName"":""PP"
 Frydenlund Juicy IPA (0.33 L);August Sollesnes Solvang;4790145211;"{""sectionName"":""PP"",""orderType"":""DIRECT"",""sectionId"":""ebbf1670-9b11-4f5a-bbfa-bcf8220e6376""}";34;NOK;1;2022-05-17 18:24:52.71934;516278
 Frydenlund Fatøl (0.5 L);Anders Larsen;4791394325;"{""sectionName"":""PP"",""orderType"":""DIRECT"",""sectionId"":""ebbf1670-9b11-4f5a-bbfa-bcf8220e6376""}";32;NOK;1;2022-05-17 18:24:34.645462;516278
 Frydenlund Fatøl (0.5 L);Aslak Hollund;4747304656;"{""sectionName"":""PP"",""orderType"":""DIRECT"",""sectionId"":""ebbf1670-9b11-4f5a-bbfa-bcf8220e6376""}";32;NOK;1;2022-05-17 18:24:07.78374;516278
-Frydenlund Fatøl (0.5L );Jdjdj;4747948135;"{""sectionName"":""Adrian"",""orderType"":""DIRECT"",""sectionId"":""9069b70c-4bad-4850-89b9-e8cb13176c8c""}";32;NOK;1;2022-05-17 17:12:13.879067;516278
+Frydenlund Fatøl (0.5L );Peter Rydberg;4747948135;"{""sectionName"":""Adrian"",""orderType"":""DIRECT"",""sectionId"":""9069b70c-4bad-4850-89b9-e8cb13176c8c""}";32;NOK;1;2022-05-17 17:12:13.879067;516278
 Hansa Mango IPA Lite  (0.5 L);1;4797189402;"{""sectionName"":""Adrian"",""orderType"":""DIRECT"",""sectionId"":""9069b70c-4bad-4850-89b9-e8cb13176c8c""}";39;NOK;1;2022-05-17 17:03:11.052478;516278
 Frydenlund Fatøl (0.5L );August Sollesnes Solvang;4790145211;"{""sectionName"":""Adrian"",""orderType"":""DIRECT"",""sectionId"":""9069b70c-4bad-4850-89b9-e8cb13176c8c""}";32;NOK;1;2022-05-17 17:00:15.828714;516278
 Somersby Peach Bellini (0.5 L);Anders Larsen;4791394325;"{""sectionName"":""Adrian"",""orderType"":""DIRECT"",""sectionId"":""9069b70c-4bad-4850-89b9-e8cb13176c8c""}";47;NOK;1;2022-05-17 16:57:04.58216;516278
