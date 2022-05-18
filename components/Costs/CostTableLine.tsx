@@ -29,6 +29,10 @@ const CostTableLine = (props: CostTableLineProps) => {
             <Td
               key={`${name}-{${index}-${person.phone}`}
               onClick={() => handleClick(section)}
+              style={{ cursor: "pointer" }}
+              _hover={{
+                textDecoration: "underline",
+              }}
             >
               {section.sectionCost}
             </Td>
