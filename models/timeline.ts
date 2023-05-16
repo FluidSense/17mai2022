@@ -39,9 +39,12 @@ export function timelineFromDTO({
   type,
   description,
 }: TimelineDTO): Timeline {
+  const thisYear = new Date().getFullYear();
   return {
-    arrival: !!arrival ? new Date(`2022-05-17T${arrival}`) : undefined,
-    departure: !!departure ? new Date(`2022-05-17T${departure}`) : undefined,
+    arrival: !!arrival ? new Date(`${thisYear}-05-17T${arrival}`) : undefined,
+    departure: !!departure
+      ? new Date(`${thisYear}-05-17T${departure}`)
+      : undefined,
     type: isTimelineTypeFromCMS(type) ? type : "default",
     placeId: place,
     description: !!description ? description : undefined,
